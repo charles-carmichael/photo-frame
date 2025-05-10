@@ -69,4 +69,4 @@ echo "Starting initial photo sync..."
 python3 "$PHOTO_FRAME/sync_photos.py"
 
 # clean up
-echo "Done. Photo Frame will auto-launch after 1 minute of inactivity"
+echo "Done. Photo Frame will auto-launch after 1 minute of inactivity."
