@@ -34,9 +34,9 @@ curl -s -o "$PHOTO_FRAME/sync_photos.py" https://raw.githubusercontent.com/charl
 curl -s -o "$PHOTO_FRAME/README.md" https://raw.githubusercontent.com/charles-carmichael/photo-frame/main/README.md
 
 # create autostart file
-echo "Creating autostart file..." 
+echo "Creating autostart file..."
 cat > ~/.config/labwc/autostart << EOF
-xautolock -time $PF_AUTOSTART_TIMER -locker "$PHOTO_FRAME/start.sh"
+swayidle -w timeout 60 "$PHOTO_FRAME/start.sh"
 EOF
 
 # create screensaver script
