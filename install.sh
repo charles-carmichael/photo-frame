@@ -60,6 +60,7 @@ Terminal=false
 Icon=$PHOTO_FRAME/icon.png
 EOF
 chmod +x ~/Desktop/PhotoFrame.desktop
+pcmanfm --reconfigure  # refresh so icon shows up
 
 # execute initial photo sync
 echo "Starting initial photo sync..."
