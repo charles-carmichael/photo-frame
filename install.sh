@@ -66,5 +66,15 @@ pcmanfm --reconfigure  # refresh so icon shows up
 echo "Starting initial photo sync..."
 python3 "$PHOTO_FRAME/sync_photos.py"
 
+# add crontab entry for nightly photo sync
+echo "Updating cron sync schedule..."
+CRON_SYNC="0 3 * * * python3 $PHOTO_FRAME/sync_photos.py > $PHOTO_FRAME/sync_photos.log 2>&1"
+CRON_START="5 3 * * * $PHOTO_FRAME/start.sh > $PHOTO_FRAME/start.log 2>&1"
+crontab -l 2>/dev/null > temp_cron || true
+grep -F "$CRON_SYNC" temp_cron >/dev/null || echo "$CRON_SYNC" >> temp_cron
+grep -F "$CRON_START" temp_cron >/dev/null || echo "$CRON_START" >> temp_cron
+crontab temp_cron
+rm temp_cron
+
 # clean up
 echo "Done. Photo Frame will auto-launch after 1 minute of inactivity."
