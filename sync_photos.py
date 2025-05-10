@@ -65,7 +65,7 @@ def sync_photos(album_url, output_dir):
         photo_guid = photo.get("photoGuid")
         photo_checksum = best_derivative[1]["checksum"]
         # check if the photo has already been downloaded
-        filename = f"photo_{photo_guid}_{photo_checksum[:8]}.jpg"
+        filename = f"{photo_guid}_{photo_checksum[:8]}.jpg"
         current_files.append(filename)
         if not os.path.exists(os.path.join(output_dir, filename)):
             photo_ids.append((photo_guid, photo_checksum))
@@ -90,7 +90,7 @@ def sync_photos(album_url, output_dir):
         photo_download.raise_for_status()
 
         # write the photo to disk
-        filepath = os.path.join(output_dir, f"photo_{guid}_{checksum[:8]}.jpg")
+        filepath = os.path.join(output_dir, f"{guid}_{checksum[:8]}.jpg")
         with open(filepath, "wb") as f:
             for chunk in photo_download.iter_content(chunk_size=8192):
                 f.write(chunk)
@@ -108,7 +108,7 @@ def sync_photos(album_url, output_dir):
 
 def resize_photos(target_x, target_y):
     """Resize, extend, and blur photos to match the desired resolution."""
-    target_aspect_ratio = target_x / target_y
+    target_ar = target_x / target_y
     for file in os.listdir(ALBUM_DIR):
         # load the existing image
         image = Image.open(os.path.join(ALBUM_DIR, file))
@@ -123,13 +123,19 @@ def resize_photos(target_x, target_y):
         print(f'resizing: {file}')
         new_image = image.resize((target_x, target_y))
         new_image = new_image.filter(ImageFilter.GaussianBlur(radius=70))
-        if ar > target_aspect_ratio:
+        if ar > target_ar:
             # resize the original image to fit the screen width
-            image = image.resize((target_x, int((target_x / x) * y)))
+            new_height = int((target_x / x) * y)
+            image = image.resize((target_x, new_height))
+            paste_x = 0
+            paste_y = int((target_y - new_height) / 2)
         else:
             # resize the original image to fit the screen height
-            image = image.resize((int((target_y / y) * x), target_y))
-        new_image.paste(image, (int((target_x - x) / 2), int((target_y - y) / 2)))
+            new_width = int((target_y / y) * x)
+            image = image.resize((new_width, target_y))
+            paste_x = int((target_x - new_width) / 2)
+            paste_y = 0
+        new_image.paste(image, (paste_x, paste_y))
         new_image.save(os.path.join(ALBUM_DIR, file))
 
 
