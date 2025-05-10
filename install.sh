@@ -24,16 +24,16 @@ if ! grep -q "^export PF_RES_Y=" ~/.bashrc; then echo "export PF_RES_Y=\"$PF_RES
 # shellcheck disable=SC1090
 source ~/.bashrc
 
+# install packages
+echo "Installing packages..."
+apt install -y feh xautolock
+
 # create program directory, download resources
 echo "Downloading resources..."
 mkdir -p "$PF_ALBUM_DIR"
 curl -o "$PHOTO_FRAME/icon.png" https://raw.githubusercontent.com/charles-carmichael/photo-frame/main/icon.png
 curl -o "$PHOTO_FRAME/sync_photos.py" https://raw.githubusercontent.com/charles-carmichael/photo-frame/main/sync_photos.py
 curl -o "$PHOTO_FRAME/README.md" https://raw.githubusercontent.com/charles-carmichael/photo-frame/main/README.md
-
-# install packages
-echo "Installing packages..."
-apt install -y feh xautolock
 
 # create autostart file
 echo "Creating autostart file..." 
