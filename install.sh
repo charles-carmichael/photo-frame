@@ -26,14 +26,14 @@ source ~/.bashrc
 
 # install packages
 echo "Installing packages..."
-apt install -y feh xautolock
+sudo apt-get -qq install -y feh xautolock
 
 # create program directory, download resources
 echo "Downloading resources..."
 mkdir -p "$PF_ALBUM_DIR"
-curl -o "$PHOTO_FRAME/icon.png" https://raw.githubusercontent.com/charles-carmichael/photo-frame/main/icon.png
-curl -o "$PHOTO_FRAME/sync_photos.py" https://raw.githubusercontent.com/charles-carmichael/photo-frame/main/sync_photos.py
-curl -o "$PHOTO_FRAME/README.md" https://raw.githubusercontent.com/charles-carmichael/photo-frame/main/README.md
+curl -s -o "$PHOTO_FRAME/icon.png" https://raw.githubusercontent.com/charles-carmichael/photo-frame/main/icon.png
+curl -s -o "$PHOTO_FRAME/sync_photos.py" https://raw.githubusercontent.com/charles-carmichael/photo-frame/main/sync_photos.py
+curl -s -o "$PHOTO_FRAME/README.md" https://raw.githubusercontent.com/charles-carmichael/photo-frame/main/README.md
 
 # create autostart file
 echo "Creating autostart file..." 
@@ -65,6 +65,7 @@ Icon=$PHOTO_FRAME/icon.png
 EOF
 
 # execute initial photo sync
+echo "Starting initial photo sync..."
 python3 "$PHOTO_FRAME/sync_photos.py"
 
 # clean up
