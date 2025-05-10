@@ -21,8 +21,6 @@ if ! grep -q "^export PF_AUTOSTART_TIMER=" ~/.bashrc; then echo "export PF_AUTOS
 if ! grep -q "^export PF_SLIDESHOW_DELAY=" ~/.bashrc; then echo "export PF_SLIDESHOW_DELAY=\"$PF_SLIDESHOW_DELAY\"" >> ~/.bashrc; fi
 if ! grep -q "^export PF_RES_X=" ~/.bashrc; then echo "export PF_RES_X=\"$PF_RES_X\"" >> ~/.bashrc; fi
 if ! grep -q "^export PF_RES_Y=" ~/.bashrc; then echo "export PF_RES_Y=\"$PF_RES_Y\"" >> ~/.bashrc; fi
-# shellcheck disable=SC1090
-source ~/.bashrc
 
 # install packages
 echo "Installing packages..."
@@ -51,6 +49,7 @@ cat > ~/photo-frame/start.sh << EOF
 pkill -f feh
 feh --fullscreen --slideshow-delay $PF_SLIDESHOW_DELAY --reload 3600 --hide-pointer --randomize "$PF_ALBUM_DIR"
 EOF
+chmod +x "$PHOTO_FRAME/start.sh"
 
 # create desktop shortcut
 echo "Creating desktop shortcut..."
