@@ -2,14 +2,14 @@
 
 # gather basic settings
 echo "Starting PhotoFrame setup..."
-if [ -z "$PHOTO_FRAME" ]; then PHOTO_FRAME="$HOME/photo-frame"; fi
-if [ -z "$PF_ALBUM_ID" ]; then read -r -p "Enter the iCloud album id: " PF_ALBUM_ID; fi
-if [ -z "$PF_ALBUM_DIR" ]; then PF_ALBUM_DIR="$PHOTO_FRAME/photos"; fi
-if [ -z "$PF_ALBUM_MAX" ]; then PF_ALBUM_MAX="8640"; fi
-if [ -z "$PF_AUTOSTART_TIMER" ]; then PF_AUTOSTART_TIMER="1"; fi
-if [ -z "$PF_SLIDESHOW_DELAY" ]; then PF_SLIDESHOW_DELAY="5"; fi
-if [ -z "$PF_RES_X" ]; then PF_RES_X=$(fbset -s | grep mode | head -1 | cut -d '"' -f 2 | cut -d 'x' -f 1); fi
-if [ -z "$PF_RES_Y" ]; then PF_RES_Y=$(fbset -s | grep mode | head -1 | cut -d '"' -f 2 | cut -d 'x' -f 2); fi
+if [ -z "$PHOTO_FRAME" ]; then PHOTO_FRAME="$HOME/photo-frame"; export PHOTO_FRAME; fi
+if [ -z "$PF_ALBUM_ID" ]; then read -r -p "Enter the iCloud album id: " PF_ALBUM_ID; export PF_ALBUM_ID; fi
+if [ -z "$PF_ALBUM_DIR" ]; then PF_ALBUM_DIR="$PHOTO_FRAME/photos"; export PF_ALBUM_DIR; fi
+if [ -z "$PF_ALBUM_MAX" ]; then PF_ALBUM_MAX="8640"; export PF_ALBUM_MAX; fi
+if [ -z "$PF_AUTOSTART_TIMER" ]; then PF_AUTOSTART_TIMER="1"; export PF_AUTOSTART_TIMER; fi
+if [ -z "$PF_SLIDESHOW_DELAY" ]; then PF_SLIDESHOW_DELAY="5"; export PF_SLIDESHOW_DELAY; fi
+if [ -z "$PF_RES_X" ]; then PF_RES_X=$(fbset -s | grep mode | head -1 | cut -d '"' -f 2 | cut -d 'x' -f 1); export PF_RES_X; fi
+if [ -z "$PF_RES_Y" ]; then PF_RES_Y=$(fbset -s | grep mode | head -1 | cut -d '"' -f 2 | cut -d 'x' -f 2); export PF_RES_Y; fi
 
 # export environment variables, but don't overwrite existing values
 echo "Saving configuration values..."
@@ -38,7 +38,7 @@ curl -s -o "$PHOTO_FRAME/README.md" https://raw.githubusercontent.com/charles-ca
 # create autostart file
 echo "Creating autostart file..." 
 mkdir -p ~/.config/lxsession/LXDE-pi
-cat > EOF ~/.config/lxsession/LXDE-pi/autostart << EOF
+cat > ~/.config/lxsession/LXDE-pi/autostart << EOF
 @lxpanel --profile LXDE-pi
 @pcmanfm --desktop --profile LXDE-pi
 @xautolock -time $PF_AUTOSTART_TIMER -locker "$PHOTO_FRAME/start.sh"
@@ -63,6 +63,7 @@ Type=Application
 Terminal=false
 Icon=$PHOTO_FRAME/icon.png
 EOF
+chmod +x ~/Desktop/PhotoFrame.desktop
 
 # execute initial photo sync
 echo "Starting initial photo sync..."
