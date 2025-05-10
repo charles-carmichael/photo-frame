@@ -17,7 +17,7 @@ I didn't love any existing photo frame projects. MagicMirror is cool, but includ
 A script called `install.py` automatically handles the configuration of your photo frame. Execute it on your pi with:
 
 ```bash
-curl -sL https://raw.githubusercontent.com/charles-carmichael/photo-frame/main/install.sh | bash
+curl -sL https://raw.githubusercontent.com/charles-carmichael/photo-frame/main/install.sh -o /tmp/install.sh && chmod +x /tmp/install.sh && /tmp/install.sh && rm /tmp/install.sh
 ```
 
 This will do the following: 
