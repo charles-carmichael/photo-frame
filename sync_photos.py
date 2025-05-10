@@ -6,11 +6,11 @@ from PIL import ImageFilter
 
 
 # load settings
-ALBUM_URL = f"https://www.icloud.com/sharedalbum/{os.getenv('ALBUM_ID')}"
-ALBUM_DIR = os.getenv("ALBUM_DIR")
-ALBUM_MAX = int(os.getenv("ALBUM_MAX"))
-RES_X = int(os.getenv("REX_X"))  # 3840
-RES_Y = int(os.getenv("RES_Y"))  # 2160
+ALBUM_URL = f"https://www.icloud.com/sharedalbum/{os.getenv('PF_ALBUM_ID')}"
+ALBUM_DIR = os.getenv("PF_ALBUM_DIR")
+ALBUM_MAX = int(os.getenv("PF_ALBUM_MAX"))
+RES_X = int(os.getenv("PF_REX_X"))
+RES_Y = int(os.getenv("PF_RES_Y"))
 
 
 def fetch_album_host(album_id):
