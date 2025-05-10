@@ -35,11 +35,8 @@ curl -s -o "$PHOTO_FRAME/README.md" https://raw.githubusercontent.com/charles-ca
 
 # create autostart file
 echo "Creating autostart file..." 
-mkdir -p ~/.config/lxsession/LXDE-pi
-cat > ~/.config/lxsession/LXDE-pi/autostart << EOF
-@lxpanel --profile LXDE-pi
-@pcmanfm --desktop --profile LXDE-pi
-@xautolock -time $PF_AUTOSTART_TIMER -locker "$PHOTO_FRAME/start.sh"
+cat > ~/.config/labwc/autostart << EOF
+xautolock -time $PF_AUTOSTART_TIMER -locker "$PHOTO_FRAME/start.sh"
 EOF
 
 # create screensaver script
