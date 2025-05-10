@@ -16,22 +16,28 @@ I didn't love any existing photo frame projects. MagicMirror is cool, but includ
 
 A script called `install.py` automatically handles the configuration of your photo frame. Execute it on your pi with:
 
-```commandline
-TODO
+```bash
+curl -sL https://raw.githubusercontent.com/charles-carmichael/main/install.sh | bash
 ```
 
 This will do the following: 
-- TODO
+
+- Gathers basic configuration settings
+- Installs required packages
+- Creates program directory, downloads resources
+- Creates local autostart resources, shell scripts, shortcuts
+- Executes initial photo album download (this can take a while)
 
 ### Notes
 - To exit the photo frame and go back to desktop, press Escape. The photo frame will resume after one minute of inactivity.
 - The following settings are stored in environment variables if you want to change them: 
-  - `ALBUM_ID`: the public shared album url id (starts with "#")
-  - `ALBUM_DIR`: the local directory to store photos (default: `~/photo-frame/photos`)
-  - `ALBUM_MAX`: the maximum number of photos to keep (default: the 8640 most recently added photos)
-  - `AUTOSTART_TIMER`: the number of minutes of inactivity to wait before starting the photo frame
-  - `SLIDESHOW_DELAY`: the number of seconds to display each photo
-  - `RES_X`: the desired photo width (default: resolution width)
-  - `RES_Y`: the desired photo height (default: resolution height)
+  - `PHOTO_FRAME`: the photo frame program data directory (default: `~/photo-frame`)
+  - `PF_ALBUM_ID`: the public shared album url id (starts with "#")
+  - `PF_ALBUM_DIR`: the local directory to store photos (default: `~/photo-frame/photos`)
+  - `PF_ALBUM_MAX`: the maximum number of photos to keep (default: the 8640 most recently added photos)
+  - `PF_AUTOSTART_TIMER`: the number of minutes of inactivity to wait before starting the photo frame
+  - `PF_SLIDESHOW_DELAY`: the number of seconds to display each photo
+  - `PF_RES_X`: the desired photo width (default: resolution width)
+  - `PF_RES_Y`: the desired photo height (default: resolution height)
 - Some photos aren't downloading for unknown reasons, more troubleshooting required.
 - Don't forget to install a remote support agent like Raspberry Pi Connect to help your family/friends when stuff breaks.
