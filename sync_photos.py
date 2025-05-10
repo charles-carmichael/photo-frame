@@ -9,7 +9,7 @@ from PIL import ImageFilter
 ALBUM_URL = f"https://www.icloud.com/sharedalbum/{os.getenv('PF_ALBUM_ID')}"
 ALBUM_DIR = os.getenv("PF_ALBUM_DIR")
 ALBUM_MAX = int(os.getenv("PF_ALBUM_MAX"))
-RES_X = int(os.getenv("PF_REX_X"))
+RES_X = int(os.getenv("PF_RES_X"))
 RES_Y = int(os.getenv("PF_RES_Y"))
 
 
