@@ -13,6 +13,7 @@ if [ -z "$PF_RES_Y" ]; then PF_RES_Y=$(fbset -s | grep mode | head -1 | cut -d '
 
 # create custom env
 echo "Creating environment..."
+mkdir -p "$PHOTO_FRAME"
 cat > "$PHOTO_FRAME/.env" << EOF
 export PHOTO_FRAME="$PHOTO_FRAME"
 export PF_ALBUM_ID="$PF_ALBUM_ID"
