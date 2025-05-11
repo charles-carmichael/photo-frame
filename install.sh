@@ -11,16 +11,19 @@ if [ -z "$PF_SLIDESHOW_DELAY" ]; then PF_SLIDESHOW_DELAY="5"; export PF_SLIDESHO
 if [ -z "$PF_RES_X" ]; then PF_RES_X=$(fbset -s | grep mode | head -1 | cut -d '"' -f 2 | cut -d 'x' -f 1); export PF_RES_X; fi
 if [ -z "$PF_RES_Y" ]; then PF_RES_Y=$(fbset -s | grep mode | head -1 | cut -d '"' -f 2 | cut -d 'x' -f 2); export PF_RES_Y; fi
 
-# export environment variables, but don't overwrite existing values
-echo "Saving configuration values..."
-if ! grep -q "^export PHOTO_FRAME=" ~/.bashrc; then echo "export PHOTO_FRAME=\"$PHOTO_FRAME\"" >> ~/.bashrc; fi
-if ! grep -q "^export PF_ALBUM_ID=" ~/.bashrc; then echo "export PF_ALBUM_ID=\"$PF_ALBUM_ID\"" >> ~/.bashrc; fi
-if ! grep -q "^export PF_ALBUM_DIR=" ~/.bashrc; then echo "export PF_ALBUM_DIR=\"$PF_ALBUM_DIR\"" >> ~/.bashrc; fi
-if ! grep -q "^export PF_ALBUM_MAX=" ~/.bashrc; then echo "export PF_ALBUM_MAX=\"$PF_ALBUM_MAX\"" >> ~/.bashrc; fi
-if ! grep -q "^export PF_AUTOSTART_TIMER=" ~/.bashrc; then echo "export PF_AUTOSTART_TIMER=\"$PF_AUTOSTART_TIMER\"" >> ~/.bashrc; fi
-if ! grep -q "^export PF_SLIDESHOW_DELAY=" ~/.bashrc; then echo "export PF_SLIDESHOW_DELAY=\"$PF_SLIDESHOW_DELAY\"" >> ~/.bashrc; fi
-if ! grep -q "^export PF_RES_X=" ~/.bashrc; then echo "export PF_RES_X=\"$PF_RES_X\"" >> ~/.bashrc; fi
-if ! grep -q "^export PF_RES_Y=" ~/.bashrc; then echo "export PF_RES_Y=\"$PF_RES_Y\"" >> ~/.bashrc; fi
+# create custom env
+echo "Creating environment..."
+cat > "$PHOTO_FRAME/.env" << EOF
+export PHOTO_FRAME="$PHOTO_FRAME"
+export PF_ALBUM_ID="$PF_ALBUM_ID"
+export PF_ALBUM_DIR="$PF_ALBUM_DIR"
+export PF_ALBUM_MAX="$PF_ALBUM_MAX"
+export PF_AUTOSTART_TIMER="$PF_AUTOSTART_TIMER"
+export PF_SLIDESHOW_DELAY="$PF_SLIDESHOW_DELAY"
+export PF_RES_X="$PF_RES_X"
+export PF_RES_Y="$PF_RES_Y"
+EOF
+if ! grep -q "^\. $PHOTO_FRAME/\.env" ~/.bashrc; then echo ". $PHOTO_FRAME/.env" >> ~/.bashrc; fi
 
 # install packages
 echo "Installing packages..."
@@ -68,7 +71,7 @@ python3 "$PHOTO_FRAME/sync_photos.py"
 
 # add crontab entry for nightly photo sync
 echo "Updating cron sync schedule..."
-CRON_SYNC="0 3 * * * python3 $PHOTO_FRAME/sync_photos.py > $PHOTO_FRAME/sync_photos.log 2>&1"
+CRON_SYNC="0 3 * * * /bin/bash -c 'source $PHOTO_FRAME/.env && python3 $PHOTO_FRAME/sync_photos.py > $PHOTO_FRAME/sync_photos.log 2>&1'"
 CRON_START="5 3 * * * $PHOTO_FRAME/start.sh > $PHOTO_FRAME/start.log 2>&1"
 crontab -l 2>/dev/null > temp_cron || true
 grep -F "$CRON_SYNC" temp_cron >/dev/null || echo "$CRON_SYNC" >> temp_cron
