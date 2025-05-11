@@ -30,7 +30,7 @@ This will do the following:
 
 ### Notes
 - To exit the photo frame and go back to desktop, press Escape. The photo frame will resume after one minute of inactivity.
-- The following settings are stored in environment variables if you want to change them: 
+- The following settings are stored in environment variables in `~/photo-frame/.env` if you want to change them: 
   - `PHOTO_FRAME`: the photo frame program data directory (default: `~/photo-frame`)
   - `PF_ALBUM_ID`: the public shared album url id (starts with "#")
   - `PF_ALBUM_DIR`: the local directory to store photos (default: `~/photo-frame/photos`)
@@ -39,5 +39,5 @@ This will do the following:
   - `PF_SLIDESHOW_DELAY`: the number of seconds to display each photo
   - `PF_RES_X`: the desired photo width (default: resolution width)
   - `PF_RES_Y`: the desired photo height (default: resolution height)
-- Some photos aren't downloading for unknown reasons, more troubleshooting required.
-- Don't forget to install a remote support agent like Raspberry Pi Connect to help your family/friends when stuff breaks.
+- Videos are unsupported.
+- Don't forget to install a remote support agent like Raspberry Pi Connect to help your family/friends when stuff breaks. This project was tested on Raspberry Pi OS (bookworm).
