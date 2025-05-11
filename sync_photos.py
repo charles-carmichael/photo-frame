@@ -57,6 +57,9 @@ def sync_photos(album_url, output_dir):
     photo_ids = list()
     current_files = list()
     for i, photo in enumerate(recent_photos):
+        # skip videos
+        if photo.get("mediaAssetType") == "video":
+            continue
         # pick the highest quality derivative (usually the last one)
         derivatives = photo.get("derivatives", {})
         if not derivatives:
