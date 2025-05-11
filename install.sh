@@ -64,7 +64,6 @@ Terminal=false
 Icon=$PHOTO_FRAME/icon.png
 EOF
 chmod +x ~/Desktop/PhotoFrame.desktop
-pcmanfm --reconfigure  # refresh so icon shows up
 
 # execute initial photo sync
 echo "Starting initial photo sync..."
@@ -82,3 +81,4 @@ rm temp_cron
 
 # clean up
 echo "Done. Photo Frame will auto-launch after 1 minute of inactivity."
+read -p "Reboot now? (y/n) " -r && [[ $REPLY =~ ^[Yy]$ ]] && reboot
