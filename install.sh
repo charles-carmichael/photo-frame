@@ -47,6 +47,7 @@ echo "Creating screensaver script..."
 cat > ~/photo-frame/start.sh << EOF
 #!/bin/bash
 pkill -f feh
+sleep 5
 feh --fullscreen --slideshow-delay $PF_SLIDESHOW_DELAY --reload 3600 --hide-pointer --randomize "$PF_ALBUM_DIR"
 EOF
 chmod +x "$PHOTO_FRAME/start.sh"
