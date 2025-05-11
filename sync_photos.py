@@ -33,7 +33,7 @@ def sync_photos(album_url, output_dir):
     base_url = f"https://{album_host}/{album_id}/sharedstreams"
 
     # get the current photo list by guid
-    print('getting photo list')
+    print('Getting photo list...')
     metadata_url = f"{base_url}/webstream"
     r = requests.post(metadata_url, data='{"streamCtag":null}')
     r.raise_for_status()
@@ -42,7 +42,7 @@ def sync_photos(album_url, output_dir):
 
     # make sure photo metadata was returned
     if not photos_metadata:
-        print("no photos found")
+        print("No photos found. Exiting...")
         exit()
 
     # sort photos by batchDateCreated and only keep the most recent
@@ -69,13 +69,13 @@ def sync_photos(album_url, output_dir):
         current_files.append(filename)
         if not os.path.exists(os.path.join(output_dir, filename)):
             photo_ids.append((photo_guid, photo_checksum))
-    print(f"found {len(photo_ids)} new photo{'s' if len(photo_ids) != 1 else ''}")
+    print(f"Found {len(photo_ids)} new photo{'s' if len(photo_ids) != 1 else ''}")
 
     # download each photo
     photos_url = f"{base_url}/webasseturls"
     for guid, checksum in photo_ids:
         # get the download url
-        print(f"processing photo: {guid}/{checksum}")
+        print(f"Processing photo {guid}/{checksum}...")
         payload = {"photoGuids": [guid]}
         response = requests.post(photos_url, json=payload)
         url_data = response.json()
@@ -94,14 +94,14 @@ def sync_photos(album_url, output_dir):
         with open(filepath, "wb") as f:
             for chunk in photo_download.iter_content(chunk_size=8192):
                 f.write(chunk)
-        print(f"downloaded: {filepath}")
+        print(f"Downloaded: {filepath}")
 
     # remove old photos
     old_files = list()
     for existing_file in os.listdir(output_dir):
         if existing_file not in current_files:
             old_files.append(existing_file)
-    print(f"deleting {len(old_files)} old file{'s' if len(old_files) != 1 else ''}")
+    print(f"Deleting {len(old_files)} old file{'s' if len(old_files) != 1 else ''}...")
     for x in old_files:
         os.remove(os.path.join(output_dir, x))
 
@@ -120,7 +120,7 @@ def resize_photos(target_x, target_y):
             continue
 
         # resize the image and blur any extensions
-        print(f'resizing: {file}')
+        print(f'Resizing {file}...')
         new_image = image.resize((target_x, target_y))
         new_image = new_image.filter(ImageFilter.GaussianBlur(radius=70))
         if ar > target_ar:
